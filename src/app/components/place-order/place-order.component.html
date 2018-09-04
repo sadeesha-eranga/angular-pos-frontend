@@ -1,0 +1,156 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Place Order</h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 col-12">
+
+        <div class="card card-primary">
+          <div class="card-body">
+
+            <div class="form-group row">
+
+              <label for="txtOrderDate" class="col-sm-1 col-form-label">Order Date</label>
+              <div class="col-sm-2">
+                <input #orderDate
+                       type="date"
+                       class="form-control"
+                       id="txtOrderDate"
+                       placeholder="Order Date">
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="form-group row">
+              <label for="txtCustomerId" class="col-sm-4 col-form-label">Customer ID</label>
+              <label for="txtCustomerId" class="col-sm-8 col-form-label">Name</label>
+              <div class="col-sm-4">
+                <select [(ngModel)]="selectedCustomer" class="form-control col-sm-6" id="txtCustomerId">
+                  <option *ngFor="let customer of customers" [ngValue]="customer">{{customer.customerId}}</option>
+                </select>
+              </div>
+              <div class="col-sm-8">
+                <input type="text"
+                       class="form-control"
+                       id="txtCustomerName"
+                       placeholder="Customer Name"
+                       disabled
+                       value="{{selectedCustomer.name}}">
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="form-group row">
+              <label for="txtItemId" class="col-sm-1 col-form-label">Item ID</label>
+              <label for="txtDescription" class="col-sm-4 col-form-label">Description</label>
+              <label for="txtQtyOnHand" class="col-sm-2 col-form-label">Qty On Hand</label>
+              <label for="txtQty" class="col-sm-2 col-form-label">Qty</label>
+              <label for="txtUnitPrice" class="col-sm-3 col-form-label">Price</label>
+              <div class="col-sm-1">
+                <select (select)="qty.autofocus" [(ngModel)]="selectedItem" class="form-control col-sm-12" id="txtItemId">
+                  <option *ngFor="let item of items" [ngValue]="item">{{item.itemId}}</option>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <input type="text"
+                       class="form-control"
+                       id="txtDescription"
+                       placeholder="Description"
+                       disabled
+                       value="{{selectedItem.description}}">
+              </div>
+              <div class="col-sm-2">
+                <input #qty
+                       type="text"
+                       class="form-control"
+                       id="txtQtyOnHand"
+                       placeholder="Qty on Hand"
+                       disabled
+                       value="{{selectedItem.qtyOnHand}}">
+              </div>
+              <div class="col-sm-2">
+                <input #qty
+                       type="text"
+                       class="form-control"
+                       id="txtQty"
+                       placeholder="Qty"
+                       value="1">
+              </div>
+              <div class="col-sm-2">
+                <input #unitPrice
+                       type="text"
+                       class="form-control"
+                       id="txtUnitPrice"
+                       placeholder="Unit Price"
+                       style="text-align: right"
+                       value="{{selectedItem.unitPrice}}">
+              </div>
+              <button (click)="addItems(qty.value, unitPrice.value)"
+                      class="btn btn-info col-sm-1"
+                      type="button"
+                      id="btnAdd">Add
+              </button>
+            </div>
+
+            <hr>
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <div class="col-md-12 col-12">
+
+        <table id="tblItems" class="table table-active table-hover">
+          <thead style="background-color: white">
+          <tr>
+            <th>Item Code</th>
+            <th>Description</th>
+            <th>Unit Price</th>
+            <th>QTY</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let od of orderDetailList">
+            <td>{{od.itemDTO.itemId}}</td>
+            <td>{{od.itemDTO.description}}</td>
+            <td>{{od.itemDTO.unitPrice}}</td>
+            <td>{{od.qty}}</td>
+            <td>{{od.totalPrice}}</td>
+            <td>
+              <i (click)="removeItem(od)" class="fa fa-trash fa-1x"></i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="form-group ">
+          <button type="submit"
+                  class="btn btn-primary float-right"
+                  (click)="placeOrder(orderDate.value)">Make Order
+          </button>
+        </div>
+        <div class="form-group form-inline float-right">
+          <label for="finalTotal" class="col-2">Total</label>
+          <input type="text" readonly class="form-control text-right" id="finalTotal" placeholder="Total">
+        </div>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>

@@ -1,0 +1,120 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Manage Items</h1>
+      </div><!-- /.col -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 col-12">
+
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Item Information</h3>
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-12">
+                  <div class="container" id="customerForm">
+                    <form #frmItem="ngForm">
+                      <div class="form-group">
+                        <label for="txtId">Item ID</label>
+                        <input [(ngModel)]="selectedItem.itemId"
+                               name="itemId"
+                               required disabled
+                               type="text"
+                               class="form-control"
+                               id="txtId"
+                               placeholder="Item ID">
+                      </div>
+                      <div class="form-group">
+                        <label for="txtDescription">Description</label>
+                        <input [(ngModel)]="selectedItem.description"
+                               name="description"
+                               required
+                               type="text"
+                               class="form-control"
+                               id="txtDescription"
+                               placeholder="Enter Item description">
+                      </div>
+                      <div class="form-group">
+                        <label for="txtQtyOnHand">Item Qty</label>
+                        <input [(ngModel)]="selectedItem.qtyOnHand"
+                               name="qtyOnHand"
+                               required
+                               type="text"
+                               class="form-control"
+                               id="txtQtyOnHand"
+                               placeholder="Enter item qty">
+                      </div>
+                      <div class="form-group">
+                        <label for="txtUnitPrice">Item Price</label>
+                        <input [(ngModel)]="selectedItem.unitPrice"
+                               name="unitPrice"
+                               required
+                               type="text"
+                               class="form-control"
+                               id="txtUnitPrice"
+                               placeholder="Enter item price">
+                      </div>
+                      <div class="form-group">
+                        <button (click)="saveItem()"
+                                [disabled]="!frmItem.valid || isItemSelected"
+                                type="button"
+                                class="btn btn-primary float-right right-buttons">Save Item</button>
+                        <button (click)="updateItem()"
+                                [disabled]="!isItemSelected"
+                                type="button"
+                                class="btn btn-warning float-right right-buttons">Update Item</button>
+                        <button (click)="clear()"
+                                [disabled]="!(isItemSelected || frmItem.dirty)"
+                                type="button"
+                                class="btn btn-info float-right right-buttons">Clear</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+        </div>
+        <div class="col-md-6 col-12">
+          <table id="tblCustomers" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Item ID</th>
+              <th>Description</th>
+              <th>Unit Price</th>
+              <th>Qty</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of items" (click)="selectItem(item)" >
+            <td>{{item.itemId}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.unitPrice}}</td>
+            <td>{{item.qtyOnHand}}</td>
+              <td>
+                <i (click)="deleteItem(item.itemId)" class="fa fa-trash fa-2x"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+</div>
