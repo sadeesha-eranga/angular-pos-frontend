@@ -1,3 +1,19 @@
-<p>
-  login works!
-</p>
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" #frmLogin="ngForm">
+      <input
+        type="text"
+        name="username"
+        placeholder="username"
+        required
+        [(ngModel)]="user.username">
+      <input
+        type="password"
+        name="password"
+        placeholder="password"
+        required
+        [(ngModel)]="user.password">
+      <button class="btn btn-success btn-block btn-lg" (click)="authenticateUser()" [disabled]="!frmLogin.valid">Login</button>
+    </form>
+  </div>
+</div>

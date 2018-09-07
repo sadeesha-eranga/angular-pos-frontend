@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Customer} from '../../dtos/customer';
+import {Customer} from '../../models/customer';
 import {CustomerService} from '../../services/customer.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-customer-form',
@@ -31,11 +32,19 @@ export class CustomerFormComponent implements OnInit {
   saveCustomer() {
     this.customerService.saveCustomer(this.selectedCustomer).subscribe((result) => {
       if (result) {
-        alert('Customer saved successfully');
+        swal({
+          title: 'Saved!',
+          text: 'Customer saved successfully',
+          icon: 'success',
+        });
         this.loadAllCustomers();
         this.clear();
       } else {
-        alert('Failed to save customer');
+        swal({
+          title: 'Failed!',
+          text: 'Failed to save the customer',
+          icon: 'error',
+        });
       }
     });
   }
@@ -43,27 +52,48 @@ export class CustomerFormComponent implements OnInit {
   updateCustomer() {
     this.customerService.updateCustomer(this.selectedCustomer).subscribe((result) => {
       if (result) {
-        alert('Customer updated successfully');
+        swal({
+          title: 'Updated!',
+          text: 'Customer updated successfully',
+          icon: 'success',
+        });
         this.loadAllCustomers();
         this.clear();
       } else {
-        alert('Failed to update customer');
+        swal({
+          title: 'Failed!',
+          text: 'Failed to update the customer',
+          icon: 'error',
+        });
       }
     });
   }
 
   deleteCustomer(customerId: number) {
-    if (confirm('Are you sure you want to delete this customer?')) {
-      this.customerService.deleteCustomer(customerId).subscribe((result) => {
-        if (result) {
-          alert('Customer deleted successfully');
-          this.loadAllCustomers();
-          this.clear();
-        } else {
-          alert('Failed to delete customer');
-        }
-      });
-    }
+    swal('Are you sure you want to delete this customer?', {
+      buttons: ['No!', 'Yes!'],
+      dangerMode: true,
+    }).then((result) => {
+      if (result) {
+        this.customerService.deleteCustomer(customerId).subscribe((res) => {
+          if (res) {
+            swal({
+              title: 'Deleted!',
+              text: 'Customer deleted successfully',
+              icon: 'success',
+            });
+            this.loadAllCustomers();
+            this.clear();
+          } else {
+            swal({
+              title: 'Failed!',
+              text: 'Failed to delete the customer',
+              icon: 'error',
+            });
+          }
+        });
+      }
+    });
   }
 
   selectCustomer(customer: Customer) {

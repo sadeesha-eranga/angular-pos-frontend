@@ -1,4 +1,4 @@
-import {Customer} from './customer';
+import {Customer} from '../models/customer';
 import {OrderDetailDTO} from './orderDetailDTO';
 
 export class OrderDTO {

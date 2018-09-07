@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Customer} from '../dtos/customer';
+import {Customer} from '../models/customer';
 import {Observable} from 'rxjs';
 
 const URL = 'http://localhost:8080/api/v1/customers';
@@ -24,5 +24,9 @@ export class CustomerService {
 
   getAllCustomers(): Observable<Array<Customer>> {
     return this.http.get<Array<Customer>>(URL);
+  }
+
+  getCustomersCount(): Observable<number> {
+    return this.http.get<number>(URL + '?action=count');
   }
 }

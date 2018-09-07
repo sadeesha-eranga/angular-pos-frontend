@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Item} from '../../dtos/item';
+import {Item} from '../../models/item';
 import {NgForm} from '@angular/forms';
 import {ItemService} from '../../services/item.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-item-form',
@@ -30,37 +31,66 @@ export class ItemFormComponent implements OnInit {
   saveItem() {
     this.itemService.saveItem(this.selectedItem).subscribe((result) => {
       if (result) {
-        alert('Item saved successfully');
+        swal({
+          title: 'Saved!',
+          text: 'Item saved successfully',
+          icon: 'success',
+        });
         this.loadAllItems();
         this.clear();
       } else {
-        alert('Failed to save item');
+        swal({
+          title: 'Failed!',
+          text: 'Failed to save the item',
+          icon: 'error',
+        });
       }
     });
   }
 
   deleteItem(itemId: number) {
-    if (confirm('Are you sure you want to delete this item?')) {
-      this.itemService.deleteItem(itemId).subscribe((result) => {
-        if (result) {
-          alert('Item deleted successfully');
-          this.loadAllItems();
-          this.clear();
-        } else {
-          alert('Failed to delete item');
-        }
-      });
-    }
+    swal('Are you sure you want to delete this customer?', {
+      buttons: ['No!', 'Yes!'],
+      dangerMode: true,
+    }).then((result) => {
+      if (result) {
+        this.itemService.deleteItem(itemId).subscribe((res) => {
+          if (res) {
+            swal({
+              title: 'Deleted!',
+              text: 'Item deleted successfully',
+              icon: 'success',
+            });
+            this.loadAllItems();
+            this.clear();
+          } else {
+            swal({
+              title: 'Failed!',
+              text: 'Failed to delete the item',
+              icon: 'error',
+            });
+          }
+        });
+      }
+    });
   }
 
   updateItem() {
     this.itemService.updateItem(this.selectedItem).subscribe((result) => {
       if (result) {
-        alert('Item updated successfully');
+        swal({
+          title: 'Updated!',
+          text: 'Item updated successfully',
+          icon: 'success',
+        });
         this.loadAllItems();
         this.clear();
       } else {
-        alert('Failed to update item');
+        swal({
+          title: 'Failed!',
+          text: 'Failed to update the item',
+          icon: 'error',
+        });
       }
     });
   }

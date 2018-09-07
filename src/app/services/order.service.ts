@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Order} from '../dtos/order';
+import {Order} from '../models/order';
 import {Observable} from 'rxjs';
 
 const URL = 'http://localhost:8080/api/v1/orders';

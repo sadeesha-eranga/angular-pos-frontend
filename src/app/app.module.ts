@@ -17,6 +17,9 @@ import {ItemService} from './services/item.service';
 import {OrderService} from './services/order.service';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import {JwPaginationComponent} from 'jw-angular-pagination';
+import {UserService} from './services/user.service';
+import {AuthGuard} from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     DashboardComponent,
     PlaceOrderComponent,
     LoginComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    JwPaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -36,12 +40,14 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     AppRoutingModule,
     FormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [
     CustomerService,
     ItemService,
-    OrderService
+    OrderService,
+    UserService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

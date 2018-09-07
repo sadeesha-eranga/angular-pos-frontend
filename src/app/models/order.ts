@@ -1,5 +1,5 @@
 import {Customer} from './customer';
-import {OrderDetailDTO} from './orderDetailDTO';
+import {OrderDetailDTO} from '../dtos/orderDetailDTO';
 
 export class Order {
   orderId: number;

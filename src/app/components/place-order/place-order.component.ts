@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Customer} from '../../dtos/customer';
-import {Item} from '../../dtos/item';
+import {Customer} from '../../models/customer';
+import {Item} from '../../models/item';
 import {OrderDetailDTO} from '../../dtos/orderDetailDTO';
 import {CustomerService} from '../../services/customer.service';
 import {ItemService} from '../../services/item.service';
 import {OrderService} from '../../services/order.service';
 import {ItemDTO} from '../../dtos/itemDTO';
 import {OrderDTO} from '../../dtos/orderDTO';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-place-order',
@@ -72,10 +73,18 @@ export class PlaceOrderComponent implements OnInit {
     const orderDTO = new OrderDTO(this.orderId, orderDate, this.selectedCustomer, this.orderDetailList);
     this.orderService.saveOrder(orderDTO).subscribe((result) => {
       if (result) {
-        alert('Order has been placed successfully');
+        swal({
+          title: 'Success!',
+          text: 'Order placed successfully',
+          icon: 'success',
+        });
         this.clear();
       } else {
-        alert('Failed to place the order');
+        swal({
+          title: 'Failed!',
+          text: 'Failed to place the order',
+          icon: 'error',
+        });
       }
     });
   }
@@ -86,5 +95,9 @@ export class PlaceOrderComponent implements OnInit {
     this.selectedItem = new Item();
     this.finalTotal = 0;
     document.getElementById('finalTotal').setAttribute('value', '');
+  }
+
+  isOrderValid(): boolean {
+    return this.orderDetailList.length > 0 && this.selectedCustomer.name !== undefined;
   }
 }

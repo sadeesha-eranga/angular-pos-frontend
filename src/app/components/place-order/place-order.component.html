@@ -1,3 +1,4 @@
+<app-header></app-header>
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -60,7 +61,8 @@
               <label for="txtQty" class="col-sm-2 col-form-label">Qty</label>
               <label for="txtUnitPrice" class="col-sm-3 col-form-label">Price</label>
               <div class="col-sm-1">
-                <select (select)="qty.autofocus" [(ngModel)]="selectedItem" class="form-control col-sm-12" id="txtItemId">
+                <select (select)="qty.autofocus" [(ngModel)]="selectedItem" class="form-control col-sm-12"
+                        id="txtItemId">
                   <option *ngFor="let item of items" [ngValue]="item">{{item.itemId}}</option>
                 </select>
               </div>
@@ -111,7 +113,6 @@
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
       </div>
       <div class="col-md-12 col-12">
 
@@ -143,6 +144,7 @@
         <div class="form-group ">
           <button type="submit"
                   class="btn btn-primary float-right"
+                  [disabled]="!isOrderValid()"
                   (click)="placeOrder(orderDate.value)">Make Order
           </button>
         </div>

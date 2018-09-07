@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Item} from '../dtos/item';
+import {Item} from '../models/item';
 import {Observable} from 'rxjs';
 
 const URL = 'http://localhost:8080/api/v1/items';
@@ -24,5 +24,9 @@ export class ItemService {
 
   getAllItems(): Observable<Array<Item>> {
     return this.http.get<Array<Item>>(URL);
+  }
+
+  getItemsCount(): Observable<number> {
+    return this.http.get<number>(URL + '?action=count');
   }
 }
