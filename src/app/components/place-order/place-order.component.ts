@@ -47,7 +47,7 @@ export class PlaceOrderComponent implements OnInit {
 
   getOrderCount() {
     this.orderService.getTotalOrders().subscribe((result) => {
-      this.orderId = result + 1;
+      this.orderId = result;
     });
   }
 
@@ -57,7 +57,7 @@ export class PlaceOrderComponent implements OnInit {
     for (const value of this.orderDetailList) {
       if (value.itemDTO.itemId === this.selectedItem.itemId) {
         value.qty = Number(qty) + Number(value.qty);
-        value.totalPrice = Number(unitPrice) + Number(value.totalPrice);
+        value.totalPrice = (Number(unitPrice) * Number(qty)) + Number(value.totalPrice);
         this.finalTotal += total;
         document.getElementById('finalTotal').setAttribute('value', this.finalTotal.toString());
         return;
@@ -78,8 +78,8 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   placeOrder(orderDate) {
-    console.log(this.orderDetailList);
-    const orderDTO = new OrderDTO(this.orderId, orderDate, this.selectedCustomer, this.orderDetailList);
+    const orderDTO = new OrderDTO(++this.orderId, orderDate, this.selectedCustomer, this.orderDetailList);
+    console.log(this.orderId);
     this.orderService.saveOrder(orderDTO).subscribe((result) => {
       if (result) {
         swal({
