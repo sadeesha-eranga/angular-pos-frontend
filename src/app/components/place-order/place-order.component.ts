@@ -54,6 +54,15 @@ export class PlaceOrderComponent implements OnInit {
   addItems(qty, unitPrice) {
     const total = qty * unitPrice;
     const remainingQty = this.selectedItem.qtyOnHand - qty;
+    for (const value of this.orderDetailList) {
+      if (value.itemDTO.itemId === this.selectedItem.itemId) {
+        value.qty = Number(qty) + Number(value.qty);
+        value.totalPrice = Number(unitPrice) + Number(value.totalPrice);
+        this.finalTotal += total;
+        document.getElementById('finalTotal').setAttribute('value', this.finalTotal.toString());
+        return;
+      }
+    }
     const itemDTO = new ItemDTO(this.selectedItem.itemId, this.selectedItem.description, this.selectedItem.unitPrice, remainingQty);
     const orderDetail = new OrderDetailDTO(qty, total, itemDTO);
     this.orderDetailList.push(orderDetail);
